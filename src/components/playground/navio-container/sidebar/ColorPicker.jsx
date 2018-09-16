@@ -29,9 +29,9 @@ class ColorPicker extends Component {
 
 const Categorical = () => {
   const cat10 = d3.scaleOrdinal(d3.schemeCategory10);
-  const cat20 = d3.scaleOrdinal(d3.schemeCategory20);
-  const cat20b = d3.scaleOrdinal(d3.schemeCategory20b);
-  const cat20c = d3.scaleOrdinal(d3.schemeCategory20c);
+  // const cat20 = d3.scaleOrdinal(d3.schemeCategory20);
+  // const cat20b = d3.scaleOrdinal(d3.schemeCategory20b);
+  // const cat20c = d3.scaleOrdinal(d3.schemeCategory20c);
   const arr10 = d3.range(10);
   const arr20 = d3.range(20);
   return (
@@ -46,6 +46,7 @@ const Categorical = () => {
             }
           </div>
         </Option>
+        {/*
         <Option value="scheme20">
           <div className="scheme20">
             {
@@ -76,6 +77,8 @@ const Categorical = () => {
             }
           </div>
         </Option>
+        */ }
+
       </Select>
   );
 };
@@ -137,18 +140,18 @@ class CategoricalPicker extends Component {
 }
 
 const colors = ["blue", "green", "gray", "orange","purple", "red"];
-  
+
 
 const SequentialPicker = (setColor, name) => {
   console.log(setColor)
   return (
     <div className="sequential-picker">
       { colors.map(d=> (
-        <Button key={d} onClick={(click) => setColor(d, name)} shape="circle" style={{ backgroundColor: d }}></Button> 
+        <Button key={d} onClick={(click) => setColor(d, name)} shape="circle" style={{ backgroundColor: d }}></Button>
         ))
       }
     </div>
-    
+
   );
 }
 
