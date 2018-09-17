@@ -1,8 +1,8 @@
 # Navio Shipyard
 
-[Live Demo](https://john-guerra.github.io/Navio/shipyard/build/)
+[Live Demo](https://john-guerra.github.io/shipyard/build/)
 
-[Repository](https://github.com/john-guerra/Navio/shipyard)
+[Repository](https://github.com/john-guerra/shipyard)
 
 <img src="demo.png" alt="Navio Shipyard" height="400">
 
@@ -14,8 +14,7 @@ The task of visualizing large multi-dimensional datasets is not trivial. It requ
 
 ## Installation
 ```sh
-git clone https://github.com/john-guerra/Navio.git
-cd Navio/shipyard
+git clone https://github.com/john-guerra/shipyard.git
 npm install
 npm start
 ```
