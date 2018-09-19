@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 
 import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
-import * as d3 from 'd3';
+import * as d3 from '../../../../node_modules/d3/build/d3.js';
 import ActionGroup from './ActionGroup';
 import Side from './sidebar/Sider';
 import { updateAttribute, updateFilteredData } from './../../../actions';
 import './sidebar.css';
 import * as d3ScaleChromatic from "d3-scale-chromatic";
 
-import navio from 'navio';
+// import navio from 'navio';
+import navio from '../../../navio.js';
 
 const cat = 'CATEGORICAL';
 const seq = 'SEQUENTIAL';
