@@ -7,7 +7,7 @@ import * as d3 from 'd3';
 const ModalDefault = ({ visible, datasets, confirmLoading, showModal, handleOk, handleCancel, setData, toggleLoading, toggleDataLoaded, setComponentClasses }) => {
   // const pathDataset = './../../../../public/datasets/';
   // const pathDataset = 'datasets/'; //for local deployment
-  const pathDataset = 'https://raw.githubusercontent.com/john-guerra/Navio/master/shipyard/public/datasets/'
+  const pathDataset = 'https://raw.githubusercontent.com/john-guerra/shipyard/public/datasets/'
 
   const handleDataset = (name) => {
     toggleLoading();
