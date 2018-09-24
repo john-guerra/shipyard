@@ -2,7 +2,7 @@
   "name": "shipyard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://john-guerra.github.io/shipyard/build/",
+  "homepage": "https://john-guerra.github.io/shipyard",
   "dependencies": {
     "@jg.murillo10/test-npm": "^1.0.2",
     "antd": "^3.4.1",
