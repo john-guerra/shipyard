@@ -1,5 +1,5 @@
-// import * as d3 from "../node_modules/d3/build/d3.js"; // Force react to use the es6 module
-import * as d3 from "d3";
+import * as d3 from "../node_modules/d3/build/d3.js"; // Force react to use the es6 module
+// import * as d3 from "../d3";
 import {interpolateBlues, interpolatePurples, interpolateBrBG} from "d3-scale-chromatic";
 
 
