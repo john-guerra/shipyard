@@ -5455,9 +5455,10 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
-navio@^0.0.12:
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/navio/-/navio-0.0.12.tgz#8f0fbcb1b5649479a1293c096de665ccafd1f60c"
+navio@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/navio/-/navio-0.0.14.tgz#89087bd3afd5bd5d04b5360e84fd7569d09bdf33"
+  integrity sha512-2isQao6d5w9xlhkaAFSOmTjGBDcNMev4F3mOWO7c6I+D0cdpt6ccDiAmqq66a/xc+PGK+5TUtmgncD1FEfUqOA==
   dependencies:
     d3 "^4.13.0"
     d3-scale-chromatic "^1.3.3"
