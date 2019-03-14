@@ -9,7 +9,6 @@ import { updateAttribute, updateFilteredData } from './../../../actions';
 import './sidebar.css';
 import * as d3ScaleChromatic from "d3-scale-chromatic";
 
-// import navio from 'navio';
 import navio from '../../../navio.js';
 
 const cat = 'CATEGORICAL';

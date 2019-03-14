@@ -10,7 +10,7 @@
     "d3-scale-chromatic": "^1.2.0",
     "file-saver": "^1.3.3",
     "immutability-helper": "^2.6.6",
-    "navio": "^0.0.14",
+    "navio": "0.0.22",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-addons-css-transition-group": "^15.6.2",
