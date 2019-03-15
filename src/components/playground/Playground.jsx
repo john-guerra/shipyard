@@ -1,5 +1,4 @@
 import React from 'react';
-import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import Loader from './loader/Loader';
 import NavioContainer from './navio-container/NavioContainer';
@@ -10,18 +9,7 @@ const Playground = ({ dataLoaded, showSidebar }) => {
   return (
     <div style={{ height: '100%' }}>
       <div>
-        { dataLoaded ?
-          <Row type="flex" justify="space-around">
-            <Col span={12}>
-              <NavioContainer />
-            </Col>
-            <Col span={12} style={{ marginTop: '40px' }}>
-              <Sample />
-            </Col>
-          </Row>
-          :
-          <Loader />
-        }
+        { dataLoaded ? <div> <NavioContainer /> <Sample /> </div> : <Loader /> }
       </div>
     </div>
   );
