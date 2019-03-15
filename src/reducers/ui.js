@@ -36,9 +36,10 @@ const ui = (state = initialState, action) => {
         componentClasses: componentsDeleted,
       });
     case ADD_COMPONENT_CLASS:
+      console.log(action)
       const componentAdd = ['box', action.className];
       let componentsAdd = state.componentClasses.splice(0);
-      componentsAdd[action.index].classes = componentAdd;
+      componentsAdd[action.index].classes = componentAdd; 
       return Object.assign({}, state, {
         componentClasses: componentsAdd,
       });
@@ -53,6 +54,8 @@ const ui = (state = initialState, action) => {
       });
     case SET_COMPONENT_CLASSES:
       let array = [];
+      console.log(action)
+      console.log(state.componentClasses)
       action.attributes.forEach((d, k)=> {
         let i = {};
         i.classes = ['box', 'hide'];

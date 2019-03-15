@@ -4,12 +4,14 @@ import { SortableElement } from 'react-sortable-hoc';
 import { Button, Input, Divider, Icon } from 'antd';
 import { ChromePicker } from 'react-color';
 import Attribute from './Attribute';
-// import ColorPicker from './ColorPicker';
+import ColorPicker from './ColorPicker';
 import { toggleColorVisible, setAttributeColor, setAlias } from './../../../../actions';
 import './sortableItem.css';
 
 const ButtonGroup = Button.Group;
 const onChangeInput = (event, f, attribute) => {
+  console.log('onChangeInput')
+  console.log(event, f, attribute);
 }
 const SortableItem = SortableElement(({attribute, number, componentClasses, setColor, toggleColorVisible}) => {
   return (
@@ -25,7 +27,7 @@ const SortableItem = SortableElement(({attribute, number, componentClasses, setC
               </div>
             </div>
             <div>
-              {/* <ColorPicker type={attribute.type} name={attribute.name} /> */}
+              <ColorPicker type={attribute.type} name={attribute.name} />
             </div>
           </div>
           <hr />
@@ -54,6 +56,10 @@ const mapStateToProps = (state, props) => ({
   componentClasses: state.ui.componentClasses[props.number].classes,
   number: props.number,
 });
+
+// const mapDispatchToProps = (dispatch, param) => {
+//   console.log('dispatch', dispatch, 'param', param);
+// };
 
 const mapDispatchToProps = dispatch => ({
   setColor: (color, event, index) => dispatch(setAttributeColor(color, event, index)),
