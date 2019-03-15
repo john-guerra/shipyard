@@ -88,7 +88,6 @@ const ActionGroup = ({ exportData, data, attributes, resetData, toggleSidebar })
                 else {
                   nn.addSequentialAttrib(d.name);
                 }
-
               }
            }
           })
@@ -99,12 +98,8 @@ const ActionGroup = ({ exportData, data, attributes, resetData, toggleSidebar })
     </body>
     </html>`;
     download();
-    // const link = document.getElementById('downloadLink');
     mimeType = mimeType || 'text/plain';
     const filename = 'index.html';
-    // link.setAttribute('download', filename);
-    // link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(elHtml));
-    // link.click();
     const blob = new Blob([elHtml], {type: `${mimeType};charset=utf-8`});
     FileSaver.saveAs(blob, filename);
   };
