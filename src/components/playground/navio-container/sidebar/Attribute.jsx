@@ -6,26 +6,21 @@ import { toggleSettingsVisible, changeTypeStatus, changeCheckStatus, updateAttri
 const { Option, OptGroup } = Select;
 class Attribute extends Component {
   componentDidMount(){
-    console.log('ATTRIBUTE', 'componentDidMount', this.props);
   }
   componentDidUpdate(){
-    console.log('ATTRIBUTE', 'componentDidUpdate', this.props)
   }
   state = {
     checked: this.props.checked,
     settings: this.props.settings,
   }
   render () {
-    console.log('RENDER',this.props)
     const { index, attribute, toggleVisible, changeCheckStatus, changeTypeStatus, addComponentClass, deleteLastComponentClass } = this.props;
-    
     const ico = attribute.settings ? 'up' : 'setting';
-    console.log(attribute, ico)
+
     return (
       <Row type="flex" align="middle" justify="center" className="attribute">
         <Col span={2} offset={1}>
           <Button shape="circle" size="small" onClick={() => {
-              console.log('onClick')
               this.setState({settings: !attribute.settings});
               toggleVisible(index, !attribute["settings"]);
               if (attribute.settings) {
@@ -40,7 +35,6 @@ class Attribute extends Component {
         </Col>
         <Col span={8}  offset={1}>{attribute.name}</Col>
         <Col span={8}>
-          {console.log(attribute.name, attribute.type)}
           <Select
             size="small"
             style={{ width: '100%' }}
@@ -74,11 +68,11 @@ const mapStateToProps = (state, param) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleVisible: (index, visible) => { 
-    dispatch(toggleSettingsVisible(index, visible)); 
+  toggleVisible: (index, visible) => {
+    dispatch(toggleSettingsVisible(index, visible));
   },
   changeTypeStatus: (att, value) => {
-    dispatch(changeTypeStatus(att, value)); 
+    dispatch(changeTypeStatus(att, value));
     dispatch(updateAttribute());
   },
   changeCheckStatus: (att, status) => {

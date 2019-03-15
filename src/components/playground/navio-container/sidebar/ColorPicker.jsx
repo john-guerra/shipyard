@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Select, Button } from 'antd';
 import { connect } from 'react-redux';
-import * as d3 from 'd3';
+import d3 from 'd3';
 import './sortableItem.css';
 import { setColor, updateAttribute } from './../../../../actions';
 
@@ -9,11 +9,8 @@ const Option = Select.Option;
 
 class ColorPicker extends Component {
   componentDidUpdate(){
-    console.log('COLOR componentDidUpdate')
   }
   componentWillUpdate(){
-
-    console.log('COLOR componentWillUpdate')
   }
   render(){
     let { setColor, name } = this.props;
@@ -21,7 +18,6 @@ class ColorPicker extends Component {
       return Categorical();
     }
     else {
-      console.log('this.props',this.props)
       return SequentialPicker(setColor, name);
     }
   }
@@ -29,9 +25,6 @@ class ColorPicker extends Component {
 
 const Categorical = () => {
   const cat10 = d3.scaleOrdinal(d3.schemeCategory10);
-  // const cat20 = d3.scaleOrdinal(d3.schemeCategory20);
-  // const cat20b = d3.scaleOrdinal(d3.schemeCategory20b);
-  // const cat20c = d3.scaleOrdinal(d3.schemeCategory20c);
   const arr10 = d3.range(10);
   const arr20 = d3.range(20);
   return (
@@ -143,7 +136,6 @@ const colors = ["blue", "green", "gray", "orange","purple", "red"];
 
 
 const SequentialPicker = (setColor, name) => {
-  console.log(setColor)
   return (
     <div className="sequential-picker">
       { colors.map(d=> (

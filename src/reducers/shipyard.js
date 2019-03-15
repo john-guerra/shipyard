@@ -71,9 +71,6 @@ const shipyard = (state = initialState, action) => {
       //reemplazar la columna del valor cambiado
       let original = [...state.source];
       let sourceData = state.source.slice();
-      console.log('source',sourceData);
-      console.log('action.status',action.status);
-      //verificar que no se modifique source!!!
       switch(action.status) {
         case 'date':
           sourceData.forEach(datum=> {
@@ -86,7 +83,6 @@ const shipyard = (state = initialState, action) => {
           });
           break;
         default:
-          console.log('default case')
           sourceData.forEach(datum=> {
             datum[action.attribute.name] = datum[action.attribute.name];
           });
@@ -112,7 +108,6 @@ const shipyard = (state = initialState, action) => {
     case TOGGLE_SETTINGS_VISIBLE:
       let items = state.attributes.slice(0);
       items[action.index]["settings"] = action.visible;
-      console.log(items)
       return Object.assign({}, state, {
         attributes: items,
       });
@@ -131,7 +126,6 @@ const shipyard = (state = initialState, action) => {
         attributes: attributesColor,
       });
     case SET_ALIAS:
-      console.log('SET_ALIAS:\n',action)
       return state;
     case TOGGLE_COLOR_VISIBLE:
       return state;

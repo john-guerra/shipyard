@@ -17,7 +17,7 @@ const mainStyle = {
 };
 const App = loading => (
   <div style={mainStyle}>
-    <Layout style={{ height: '100vh' }}>
+    <Layout>
       <Affix>
         <Header style={headerStyle}>
           <HeaderComponent />
@@ -38,4 +38,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(App);
-
