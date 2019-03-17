@@ -5,16 +5,11 @@ import { showModal, handleOk, setData, toggleLoading, toggleDataLoaded, setCompo
 import * as d3 from 'd3';
 
 const ModalDefault = ({ visible, datasets, confirmLoading, showModal, handleOk, handleCancel, setData, toggleLoading, toggleDataLoaded, setComponentClasses }) => {
-  // const pathDataset = './../../../../public/datasets/';
-  // const pathDataset = 'datasets/'; //for local deployment
   const pathDataset = 'https://raw.githubusercontent.com/john-guerra/shipyard/master/public/datasets/';
-
   const handleDataset = (name) => {
     toggleLoading();
-    console.log(`${pathDataset}${name}`);
     d3.csv(`${pathDataset}${name}`, (err, data) => {
       if (err) throw err;
-      console.log('DATA PREdEFINED DATASETS', data);
       setData(data);
       setComponentClasses(Object.keys(data[0]));
       toggleLoading();

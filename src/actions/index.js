@@ -24,7 +24,6 @@ export const SET_COMPONENT_CLASSES = 'SET_COMPONENT_CLASSES';
 export const SWAP_COMPONENT_CLASSES = 'SWAP_COMPONENT_CLASSES';
 export const SET_ALIAS = 'SET_ALIAS';
 
-// categorical, ordinal, sequential, date
 const seq = 'SEQUENTIAL';
 const cat = 'CATEGORICAL';
 const ord = 'ORDINAL';
@@ -48,7 +47,7 @@ const checkDate = (attr) => {
 
 /**
  * Returns the type of attribute casting each case.
- * @param {*} attribute 
+ * @param {*} attribute
  */
 const getType = (attribute) => {
   const notNumber = isNaN(attribute);
@@ -77,7 +76,7 @@ const getSample = (n, data) => {
   const indexes = ss.map(d => Math.floor(data.length*(d/n))-1);
   const sample = indexes.map(d => data[d]);
   return sample;
-  
+
 }
 const getAttributesType = (keys, atts, data) => {
   let attributes = JSON.parse(JSON.stringify(atts));
@@ -138,14 +137,12 @@ export const setData = (data) => {
       if (att.data === 'DATE') {
         const mydate = new Date(row[att.name]);
         if (isNaN(mydate.getDate())) {
-          // row[att.name] = null;
         } else {
           row[att.name] = mydate;
         }
       } else if (att.data === 'NUMBER') {
         const mynumber = +row[att.name];
         if (isNaN(mynumber)) {
-          // row[att.name] = null;
         } else {
           row[att.name] = mynumber;
         }
