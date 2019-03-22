@@ -64,36 +64,38 @@ const shipyard = (state = initialState, action) => {
       attributes: attrs,
     });
     case CHANGE_TYPE_STATUS:
+      debugger;
       let attrs2 = state.attributes;
       const pos2 = attrs2.map(e => e.name).indexOf(action.attribute.name);
       attrs2[pos2].type = action.status;
-      let original = [...state.source];
+      attrs2[pos2].data = 'STRING';
       let sourceData = state.source.slice();
       switch(action.status) {
-        case 'date':
-          sourceData.forEach(datum=> {
+        case 'DATE':
+          sourceData.forEach(datum => {
             datum[action.attribute.name] = new Date(datum[action.attribute.name]);
           });
           break;
-        case 'sequential':
-          sourceData.forEach(datum=> {
+        case 'SEQUENTIAL':
+          sourceData.forEach(datum => {
             datum[action.attribute.name] = +datum[action.attribute.name];
           });
           break;
         default:
-          sourceData.forEach(datum=> {
-            datum[action.attribute.name] = datum[action.attribute.name];
-          });
           break;
       }
       let actualData = state.data.slice();
       actualData.forEach((d,i)=> {
         d[action.attribute.name] = sourceData[i][action.attribute.name];
       })
-      return Object.assign({}, state, {
-        attributes: attrs2,
-        data: actualData,
-      })
+      // return Object.assign({}, state, {
+      //   attributes: attrs2,
+      //   data: actualData,
+      // })
+      return {
+        ...state,
+        attributes: attrs2
+      }
     case UPDATE_ATTRIBUTE:
       return Object.assign({}, state, {
         updated: !state.updated,

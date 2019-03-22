@@ -4,7 +4,7 @@ import { SortableContainer } from 'react-sortable-hoc';
 import SortableItem from './SortableItem';
 
 const SortableList = SortableContainer(({ items }) => (
-  <ul style={{ marginTop: '2em', width: '90%' }}>
+  <ul>
     {items.map((attribute, index) => (
       <SortableItem key={`item-${index}`} index={index} number={index} attribute={attribute} />
     ))}

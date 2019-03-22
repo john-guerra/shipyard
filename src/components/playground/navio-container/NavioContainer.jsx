@@ -112,22 +112,26 @@ class NavioContainer extends Component {
   render () {
     const { showSidebar } = this.props;
     const sidebarStyles = ['sidebar'];
-    if (!showSidebar) {sidebarStyles.push('hide')}
+    const visStyles = ['vis'];
+
+    if (!showSidebar) {
+      sidebarStyles.push('hide');
+      visStyles.push('vis--hide');
+    }
     return (
       <div>
         <ActionGroup />
-        <Row>
-          <Col span={10} className={sidebarStyles.join(' ')}>
-            <Side />
-          </Col>
-          <Col span={showSidebar ? 14 : 24}>
+        <div className="container-vis">
+          <div className={ sidebarStyles.join(' ') }>
+            <Side  />
+          </div>
+          <div className={ visStyles.join(' ') }>
             <div
-              style={{ width: '100%', overflowX: 'scroll', minHeight: '700px' }}
               id="vis"
-              ref={(target) => this.target = target }
+              ref={ target => this.target = target }
             />
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     );
   }
