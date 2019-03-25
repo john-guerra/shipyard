@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
-import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
-import { scaleOrdinal, scaleLinear, scaleTime, scalePow } from 'd3-scale';
+import { scaleOrdinal, scaleLinear, scaleTime } from 'd3-scale';
 import { select } from 'd3-selection';
 import ActionGroup from './ActionGroup';
 import Side from './sidebar/Sider';
@@ -13,9 +11,11 @@ import * as d3ScaleChromatic from "d3-scale-chromatic";
 import navio from '../../../navio.js';
 
 const cat = 'CATEGORICAL';
-const seq = 'SEQUENTIAL';
 const dat = 'DATE';
-const ord = 'ORDINAL';
+const text = 'TEXT';
+const bool = 'BOOLEAN';
+const div = 'DIVERGENT';
+
 class NavioContainer extends Component {
   componentDidMount() {
     this.setupNavio();
@@ -80,33 +80,32 @@ class NavioContainer extends Component {
     }
   }
   setupNavio = () => {
-    this.nn = navio(select(this.target), 600).updateCallback(this.props.updateFilteredData);
+    let nn = navio(select(this.target), 600).updateCallback(this.props.updateFilteredData);
     for (var i = 0; i < this.props.attributes.length; i++) {
         let d = this.props.attributes[i];
         if (d.checked) {
-          let color;
           switch (d.type) {
             case cat:
-              color = this.getScaleOrdinalScheme(d.color);
-              this.nn.addCategoricalAttrib(d.name);
+              nn.addCategoricalAttrib(d.name);
+              break;
+            case text:
+              nn.addTextAttrib(d.name);
+              break;
+            case bool:
+              nn.addBooleanAttrib(d.name);
+              break;
+            case div:
+              nn.addDivergingAttrib(d.name);
+              break;
+            case dat:
+              nn.addDateAttrib(d.name);
               break;
             default:
-              if (d.data === dat) {
-                color = this.getScaleTimeColor(d.color);
-                this.nn.addSequentialAttrib(d.name,
-                        scalePow()
-                          .range([d3ScaleChromatic.interpolatePurples(0), d3ScaleChromatic.interpolatePurples(1)]))
-                break;
-              }
-              else {
-                  color = this.getScaleOrdinalColor(d.color);
-                  this.nn.addSequentialAttrib(d.name);
-                  break;
-              }
+              nn.addTextAttrib(d.name);
           }
       }
     }
-    this.nn.data(this.props.data);
+    nn.data(this.props.data);
   }
 
   render () {

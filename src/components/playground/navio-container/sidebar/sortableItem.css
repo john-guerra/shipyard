@@ -21,12 +21,6 @@
 	/*border: 1px solid black;*/
 }
 
-/*.settings .color > div:nth-child(2) {
-	display: grid;
-	grid-template-columns: auto auto;
-	justify-content: space-around;
-}*/
-
 .settings .alias {
 	display: grid;
 	grid-template-columns: 1fr 3fr;
@@ -60,9 +54,6 @@ hr {
 .scheme20 {
 	display: grid;
 	grid-template-columns: repeat(20, 2fr);
-}
-.color-selector {
-	/*border: 1px solid black;*/
 }
 
 .sequential-picker {

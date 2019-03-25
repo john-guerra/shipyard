@@ -14,11 +14,12 @@ const headerStyle = {
 };
 const mainStyle = {
   minHeight: '100vh',
+  height: '100vh'
 };
 const App = () => (
   <div style={mainStyle}>
     <Loader></Loader>
-    <Layout>
+    <Layout style={{ height: '100%' }}>
       <Affix>
         <Header style={headerStyle}>
           <HeaderComponent />

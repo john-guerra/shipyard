@@ -4,10 +4,10 @@ import { Icon } from 'antd';
 import './loader.css';
 
 const Loader = ({ loading }) => {
-    const status = loading ? 'show' : 'hide';
+    const status = loading ? 'loader--show' : 'loader--hide';
     return  (
     <div className={status}>
-        <Icon type="loading" />
+        <Icon type="loading" style={{ fontSize: '64px' }} />
     </div>
     )
 }

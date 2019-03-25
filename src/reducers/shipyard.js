@@ -43,59 +43,68 @@ const initialState = {
       size: 171477,
       n_attributes: 4,
     },
+    {
+      id: 4,
+      title: 'IEEE VIS Papers',
+      description: 'IEEE VIS Publications 1990-2018',
+      name: 'IEEE_VIS_papers_1990_2018',
+      size: 3101,
+      n_attributes: 18
+    }
   ],
 };
 const shipyard = (state = initialState, action) => {
   switch (action.type) {
     case SET_DATA:
+      const { data, attributes, source } = action;
       return Object.assign({}, state, {
-        source: action.source,
-        data: action.data,
-        attributes: action.attributes,
-        exportData: action.source,
+        source,
+        data,
+        attributes,
+        exportData: data,
       });
     case RESET_DATA:
       return initialState;
     case CHANGE_CHECK_STATUS:
-    let attrs = state.attributes.slice(0);
-    const pos = attrs.map(e => e.name).indexOf(action.attribute.name);
-    attrs[pos].checked = action.status;
-    return Object.assign({}, state, {
-      attributes: attrs,
-    });
+      return Object.assign({}, state, {
+        attributes: state.attributes.map(attr => {
+          if (attr.name === action.attribute.name) {
+            attr.checked = action.status;
+          }
+          return attr;
+        }),
+      });
     case CHANGE_TYPE_STATUS:
       debugger;
-      let attrs2 = state.attributes;
-      const pos2 = attrs2.map(e => e.name).indexOf(action.attribute.name);
-      attrs2[pos2].type = action.status;
-      attrs2[pos2].data = 'STRING';
-      let sourceData = state.source.slice();
-      switch(action.status) {
-        case 'DATE':
-          sourceData.forEach(datum => {
-            datum[action.attribute.name] = new Date(datum[action.attribute.name]);
-          });
-          break;
-        case 'SEQUENTIAL':
-          sourceData.forEach(datum => {
-            datum[action.attribute.name] = +datum[action.attribute.name];
-          });
-          break;
-        default:
-          break;
-      }
-      let actualData = state.data.slice();
-      actualData.forEach((d,i)=> {
-        d[action.attribute.name] = sourceData[i][action.attribute.name];
-      })
-      // return Object.assign({}, state, {
-      //   attributes: attrs2,
-      //   data: actualData,
-      // })
-      return {
-        ...state,
-        attributes: attrs2
-      }
+      return Object.assign({}, state, {
+        attributes: state.attributes.map(attr => {
+          if (attr.name === action.attribute.name) {
+            attr.type = action.status;
+          }
+          return attr;
+        }),
+        data: state.source.map(datum => {
+          switch(action.status) {
+            case 'DATE':
+              datum[action.attribute.name] = new Date(datum[action.attribute.name]);
+              break;
+            case 'SEQUENTIAL':
+              datum[action.attribute.name] = +datum[action.attribute.name];
+              break;
+            case 'BOOLEAN':
+              let stringValue = datum[action.attribute.name];
+              if (stringValue.toLowerCase() === 'true') {
+                datum[action.attribute.name] = true
+              } else {
+                datum[action.attribute.name] = false;
+              }
+              break;
+            default:
+              datum[action.attribute.name] = datum[action.attribute.name].toString();
+          }
+          return datum;
+        })
+      });
     case UPDATE_ATTRIBUTE:
       return Object.assign({}, state, {
         updated: !state.updated,
@@ -115,14 +124,13 @@ const shipyard = (state = initialState, action) => {
         attributes: action.attributes,
       });
     case SET_ATTRIBUTE_COLOR:
-      let attributesColor = [...state.attributes];
-      let att = attributesColor.forEach(d=> {
-        if(d.name == action.attributeName) {
-          d["color"] = action.color;
-        }
-      });
       return Object.assign({}, state, {
-        attributes: attributesColor,
+        attributes: state.attributes.map(attr => {
+          if (attr.name === action.attributeName) {
+            attr["color"] = action.color;
+          }
+          return attr;
+        }),
       });
     case SET_ALIAS:
       return state;

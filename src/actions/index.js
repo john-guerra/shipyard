@@ -26,7 +26,6 @@ export const SET_ALIAS = 'SET_ALIAS';
 
 const seq = 'SEQUENTIAL';
 const cat = 'CATEGORICAL';
-const ord = 'ORDINAL';
 const dat = 'DATE';
 const types = [
   [seq, 'NUMBER'],
@@ -82,7 +81,7 @@ const getAttributesType = (keys, atts, data) => {
   let attributes = JSON.parse(JSON.stringify(atts));
   let ids = [];
   // regular expression used to match strings starting and finishing with id or key or in a word within non-word characters
-  const reg = /^(id|key)|(id|key)$|\W+\_*(key|id)+\_*\W+|\W+\_*(key|id)+\_*\W*/gmi;
+  const reg = /^(id|key)|(id|key)$|\W+(key|id)+\W+|\W+(key|id)+\W*/gmi;
   // returns 6 uniformly distributed rows
   const sample = getSample(6, data);
   for (let key = 0; key < keys.length; key += 1) {
@@ -103,9 +102,8 @@ const getAttributesType = (keys, atts, data) => {
         i = typei;
       }
     }
-    const [type, data] = types[i];
+    const [type] = types[i];
     attributes[key].type = type;
-    attributes[key].data = data;
   }
   return [attributes, ids];
 };
@@ -114,7 +112,7 @@ const getAttributesType = (keys, atts, data) => {
  * action creators
  */
 export const setData = (data) => {
-  const source = data.slice(0);
+  // const source = data.slice(0);
   /* Creates an empty array that will contain the metadata of the attributes */
   let attributes = [];
   let ids = [];
@@ -131,16 +129,16 @@ export const setData = (data) => {
     attributes.push(attribute);
   }
   [attributes, ids] = getAttributesType(keys, attributes, data);
-  const parsedData = data.map((d) => {
-    let row = JSON.parse(JSON.stringify(d));
+  const parsedData = data.map((row) => {
+    // let row = JSON.parse(JSON.stringify(d));
     attributes.forEach((att)=> {
-      if (att.data === 'DATE') {
+      if (att.type === 'DATE') {
         const mydate = new Date(row[att.name]);
         if (isNaN(mydate.getDate())) {
         } else {
           row[att.name] = mydate;
         }
-      } else if (att.data === 'NUMBER') {
+      } else if (att.type === 'SEQUENTIAL') {
         const mynumber = +row[att.name];
         if (isNaN(mynumber)) {
         } else {
@@ -152,8 +150,8 @@ export const setData = (data) => {
   });
   return {
     type: SET_DATA,
-    source,
     data: parsedData,
+    source: data,
     attributes,
     ids,
   };

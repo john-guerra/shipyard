@@ -1,10 +1,11 @@
 .sidebar {
   opacity: 1.0;
   box-sizing: border-box;
-  transition: opacity 500ms, transform 500ms 250ms;
+  transition: opacity 500ms, transform 500ms 500ms;
   margin: 0.5em;
   height: 80vh;
   overflow-y: scroll;
+  transform: translateX(0%);
   width: 100%;
 }
 
@@ -22,7 +23,6 @@
   overflow-x: scroll;
   min-height: 70vh;
   transition: width 500ms;
-
 }
 
 .container-vis {

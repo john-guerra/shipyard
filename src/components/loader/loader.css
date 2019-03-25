@@ -1,4 +1,4 @@
-.show {
+.loader--show {
   height: 100vh;
   position: absolute;
   width: 100%;
@@ -9,6 +9,6 @@
   justify-content: center;
 }
 
-.hide {
+.loader--hide {
   display: none;
 }
