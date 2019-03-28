@@ -4,12 +4,11 @@ import SortableItem from './SortableItem';
 
 const SortableList = SortableContainer(({ attributes }) => (
   <ul>
-    {attributes.map((attribute, index) => (
+    {attributes.map(attr => (
       <SortableItem
-        key={`item-${index}`}
-        index={index}
-        number={index}
-        attribute={attribute}
+        key={attr.__id}
+        index={attr.__id}
+        attribute={attr}
       />
     ))}
   </ul>

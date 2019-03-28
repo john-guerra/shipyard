@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Icon, Select, Tooltip, Switch } from 'antd';
-import { toggleSettingsVisible, changeTypeStatus, changeCheckStatus, updateAttribute, addComponentClass, deleteLastComponentClass } from './../../../../actions';
+import { toggleSettingsVisible, changeTypeStatus, changeCheckStatus, updateAttribute } from './../../../../actions';
 import './attribute.css';
 
 const { Option, OptGroup } = Select;
 class Attribute extends Component {
   state = {
     checked: this.props.checked,
-    settings: this.props.settings,
-    attribute: this.props.attribute,
   }
   render () {
-    const { attribute } = this.state;
-    const { index, toggleVisible, changeCheckStatus, changeTypeStatus, addComponentClass, deleteLastComponentClass } = this.props;
-    const ico = attribute.settings ? 'up' : 'setting';
+    const { toggleVisible, changeCheckStatus, changeTypeStatus, attribute } = this.props;
+    console.log(attribute.alias);
+    const ico = 'down';
     return (
       <Row type="flex" align="middle" className="attribute">
         <Col span={2}>
@@ -23,20 +21,15 @@ class Attribute extends Component {
             title="Change color and alias"
           >
             <Button shape="circle" size="small" onClick={() => {
-                this.setState({settings: !attribute.settings});
-                toggleVisible(index, !attribute["settings"]);
-                if (attribute.settings) {
-                  deleteLastComponentClass(index);
-                } else {
-                  addComponentClass('hide', index);
-                }
+                this.setState({ visible: !attribute.__visible });
+                toggleVisible(attribute.__id, !attribute.__visible);
               }}
             >
-              <Icon type={ico} />
+              <Icon type={ico} className={`down ${attribute.__visible ? 'down--rotated' : ''}`} />
             </Button>
           </Tooltip>
         </Col>
-        <Col span={10} className="truncate">{ attribute.name }</Col>
+        <Col span={10} className="truncate">{ attribute.alias }</Col>
         <Col span={8}>
           <Tooltip
             placement="bottom"
@@ -74,11 +67,6 @@ class Attribute extends Component {
   }
 }
 
-const mapStateToProps = (_, props) => ({
-  index: props.index,
-  attribute: props.attribute,
-});
-
 const mapDispatchToProps = dispatch => ({
   toggleVisible: (index, visible) => {
     dispatch(toggleSettingsVisible(index, visible));
@@ -91,8 +79,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(changeCheckStatus(att, status));
     dispatch(updateAttribute());
   },
-  deleteLastComponentClass: index => dispatch(deleteLastComponentClass(index)),
-  addComponentClass: (className, index) => dispatch(addComponentClass(className, index)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Attribute);
+export default connect(null, mapDispatchToProps)(Attribute);

@@ -11,7 +11,7 @@ const ModalDefault = ({ visible, datasets, confirmLoading, showModal, handleOk, 
     toggleLoading();
     d3.csv(`${pathDataset}${name}`).then((data) => {
       setData(data);
-      setComponentClasses(Object.keys(data[0]));
+      // setComponentClasses(Object.keys(data[0]));
       toggleLoading();
       toggleDataLoaded();
       handleCancel();

@@ -5,6 +5,7 @@ import { Row, Table } from 'antd';
 const Sample = ({ exportData, attributes }) => {
   let preview = exportData.slice(0);
   let columns = [];
+  let seqIndex = 0;
   attributes.forEach(a => {
     if (a.type === 'DATE' || a.data === 'DATE') {
       preview.forEach(d => {
@@ -21,7 +22,7 @@ const Sample = ({ exportData, attributes }) => {
     }
   });
   preview.forEach(p => {
-    p.key = p.__seqId
+    p.key = p.__seqId || seqIndex++;
   });
   return (
     <Row>

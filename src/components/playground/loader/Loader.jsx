@@ -22,7 +22,7 @@ const Loader = ({ attributes, toggleLoading, setData, toggleDataLoaded, setCompo
       try {
         values = vega.read(lEvent.target.result, {type: format});
         setData(values);
-        setComponentClasses(Object.keys(values[0]));
+        // setComponentClasses(Object.keys(values[0]));
         toggleLoading();
         toggleDataLoaded();
       } catch (err) {

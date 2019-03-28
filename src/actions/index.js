@@ -18,8 +18,8 @@ export const UPDATE_ATTRIBUTE = 'UPDATE_ATTRIBUTE';
 export const UPDATE_FILTERED_DATA = 'UPDATE_FILTERED_DATA';
 export const TOGGLE_SETTINGS_VISIBLE = 'TOGGLE_SETTINGS_VISIBLE';
 export const TOGGLE_COLOR_VISIBLE = 'TOGGLE_COLOR_VISIBLE';
-export const DELETE_COMPONENT_CLASS = 'DELETE_COMPONENT_CLASS';
-export const ADD_COMPONENT_CLASS = 'ADD_COMPONENT_CLASS';
+export const HIDE_ATTRIBUTE = 'HIDE_ATTRIBUTE';
+export const SHOW_ATTRIBUTE = 'SHOW_ATTRIBUTE';
 export const SET_COMPONENT_CLASSES = 'SET_COMPONENT_CLASSES';
 export const SWAP_COMPONENT_CLASSES = 'SWAP_COMPONENT_CLASSES';
 export const SET_ALIAS = 'SET_ALIAS';
@@ -116,6 +116,7 @@ export const setData = (data) => {
   /* Creates an empty array that will contain the metadata of the attributes */
   let attributes = [];
   let ids = [];
+  let __id = 0;
   const keys = Object.keys(data[0]);
   for (let i = 0; i < keys.length; i += 1) {
     const attribute = {
@@ -124,7 +125,8 @@ export const setData = (data) => {
       checked: true,
       type: '',
       id: false,
-      settings: false,
+      __id: __id++,
+      __visible: false,
     };
     attributes.push(attribute);
   }
@@ -220,14 +222,13 @@ export const toggleColorVisible = index => ({
   index,
 });
 
-export const deleteLastComponentClass = index => ({
-  type: DELETE_COMPONENT_CLASS,
+export const hideAttribute = index => ({
+  type: HIDE_ATTRIBUTE,
   index,
 });
 
-export const addComponentClass = (className, index) => ({
-  type: ADD_COMPONENT_CLASS,
-  className,
+export const showAttribute = index => ({
+  type: SHOW_ATTRIBUTE,
   index,
 })
 
@@ -237,8 +238,8 @@ export const swapComponentClasses = (i, j) => ({
   j,
 })
 
-export const setAlias = (event, attribute) => ({
+export const setAlias = (alias, index) => ({
   type: SET_ALIAS,
-  event,
-  attribute,
+  alias,
+  index,
 });

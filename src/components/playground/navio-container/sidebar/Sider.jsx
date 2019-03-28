@@ -2,15 +2,16 @@ import React from 'react';
 import { arrayMove } from 'react-sortable-hoc';
 import { connect } from 'react-redux';
 import SortableList from './SortableList';
-import { changeCheckStatus, updateAttribute, changeTypeStatus, toggleSettingsVisible, setAttributes, setAttributeColor, swapComponentClasses } from './../../../../actions';
+import { changeCheckStatus, updateAttribute, changeTypeStatus, toggleSettingsVisible, setAttributes } from './../../../../actions';
 import './card.css';
 
-const SortableComponent = ({ attributes, toggleVisible, reorderAttributes, setColor }) => {
+const SortableComponent = ({ attributes, reorderAttributes }) => {
   const onSortEnd = ({ oldIndex, newIndex }) => {
-    if (oldIndex === newIndex) { return; };
-    let copy = [...attributes];
-    let newArr = arrayMove(copy, oldIndex, newIndex);
-    reorderAttributes(newArr, oldIndex, newIndex);
+    if (oldIndex !== newIndex) {
+      let copy = [...attributes];
+      let newArr = arrayMove(copy, oldIndex, newIndex);
+      reorderAttributes(newArr);
+    }
   }
   return (
     <SortableList
@@ -33,9 +34,13 @@ const mapDispatchToProps = dispatch => ({
     dispatch(changeTypeStatus(att, value));
     dispatch(updateAttribute());
   },
-  toggleVisible: (index, visible) => { dispatch(toggleSettingsVisible(index, visible)); },
-  reorderAttributes: (atts, oldIndex, newIndex) => { dispatch(setAttributes(atts)); dispatch(swapComponentClasses(oldIndex, newIndex)); dispatch(updateAttribute()); },
-  setColor: (color, event, type) => dispatch(setAttributeColor(color, event, type)),
+  toggleVisible: (index, visible) => {
+    dispatch(toggleSettingsVisible(index, visible));
+  },
+  reorderAttributes: (atts) => {
+    dispatch(setAttributes(atts));
+    dispatch(updateAttribute());
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SortableComponent);

@@ -3,4 +3,13 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+.ant-btn .anticon.down {
+  transition: transform 1s ease;
+}
+
+.down--rotated {
+  transform: rotate(-180deg) translateY(3px);
 }

@@ -75,7 +75,6 @@ const shipyard = (state = initialState, action) => {
         }),
       });
     case CHANGE_TYPE_STATUS:
-      debugger;
       return Object.assign({}, state, {
         attributes: state.attributes.map(attr => {
           if (attr.name === action.attribute.name) {
@@ -114,10 +113,13 @@ const shipyard = (state = initialState, action) => {
         exportData: action.exportData,
       });
     case TOGGLE_SETTINGS_VISIBLE:
-      let items = state.attributes.slice(0);
-      items[action.index]["settings"] = action.visible;
       return Object.assign({}, state, {
-        attributes: items,
+        attributes: state.attributes.map(attr => {
+          if (action.index === attr.__id) {
+            attr.__visible = action.visible;
+          }
+          return attr;
+        }),
       });
     case SET_ATTRIBUTES:
       return Object.assign({}, state, {
@@ -127,13 +129,20 @@ const shipyard = (state = initialState, action) => {
       return Object.assign({}, state, {
         attributes: state.attributes.map(attr => {
           if (attr.name === action.attributeName) {
-            attr["color"] = action.color;
+            attr.color = action.color;
           }
           return attr;
         }),
       });
     case SET_ALIAS:
-      return state;
+      return Object.assign({}, state, {
+        attributes: state.attributes.map(attr => {
+          if (action.index === attr.__id) {
+            attr.alias = action.alias;
+          }
+          return attr;
+        })
+      });
     case TOGGLE_COLOR_VISIBLE:
       return state;
     default:

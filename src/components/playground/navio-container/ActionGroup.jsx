@@ -7,6 +7,7 @@ import FileSaver from 'file-saver';
 const ButtonGroup = Button.Group;
 const ActionGroup = ({ exportData, data, attributes, resetData, toggleSidebar }) => {
   const download = (rand) => {
+    rand = rand || Math.floor(Math.random() * 999999);
     let dataToExport = JSON.parse(JSON.stringify(exportData));
     dataToExport.forEach(d => delete d.__i);
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
@@ -73,7 +74,7 @@ const ActionGroup = ({ exportData, data, attributes, resetData, toggleSidebar })
               } else {
                 row[att.name] = mynumber;
               }
-            } else if (att.type === bol) {
+            } else if (att.type === bool) {
               let myBool = row[att.name];
               if (myBool.toLowerCase() === 'true') {
                 row[att.name] = true;
@@ -81,7 +82,7 @@ const ActionGroup = ({ exportData, data, attributes, resetData, toggleSidebar })
                 row[att.name] = false;
               }
             }
-          }
+          })
         })
 
         attributes.forEach((d,i) => {
@@ -137,7 +138,7 @@ const ActionGroup = ({ exportData, data, attributes, resetData, toggleSidebar })
           placement="bottom"
           title="Export the filtered data in csv format."
         >
-          <Button onClick={download}>
+          <Button onClick={() => download()}>
             <Icon type="table" />Export data
           </Button>
         </Tooltip>

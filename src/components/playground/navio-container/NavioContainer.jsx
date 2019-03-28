@@ -8,13 +8,15 @@ import { updateAttribute, updateFilteredData } from './../../../actions';
 import './sidebar.css';
 import * as d3ScaleChromatic from "d3-scale-chromatic";
 
-import navio from '../../../navio.js';
+// import navio from '../../../navio.js';
+import navio from 'navio';
 
 const cat = 'CATEGORICAL';
 const dat = 'DATE';
 const text = 'TEXT';
 const bool = 'BOOLEAN';
 const div = 'DIVERGENT';
+const seq = 'SEQUENTIAL';
 
 class NavioContainer extends Component {
   componentDidMount() {
@@ -99,6 +101,9 @@ class NavioContainer extends Component {
               break;
             case dat:
               nn.addDateAttrib(d.name);
+              break;
+            case seq:
+              nn.addSequentialAttrib(d.name);
               break;
             default:
               nn.addTextAttrib(d.name);
