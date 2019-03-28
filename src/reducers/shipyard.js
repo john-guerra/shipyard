@@ -47,7 +47,7 @@ const initialState = {
       id: 4,
       title: 'IEEE VIS Papers',
       description: 'IEEE VIS Publications 1990-2018',
-      name: 'IEEE_VIS_papers_1990_2018',
+      name: 'IEEE_VIS_papers_1990_2018.csv',
       size: 3101,
       n_attributes: 18
     }
