@@ -7,16 +7,17 @@ import Sample from './sample-data/Sample';
 
 
 const Playground = ({ dataLoaded, showSidebar }) => {
+  const span = showSidebar ? 24 : 12;
   return (
-    <div style={{ height: '100%' }}>
+    <div style={{ height: '100%', margin: '0px 16px'}}>
       <div>
         {
           dataLoaded ?
-          <Row>
-            <Col span={12}>
+          <Row gutter={16}>
+            <Col span={span}>
               <NavioContainer />
             </Col>
-            <Col span={12} style={{ marginTop: '40px' }}>
+            <Col span={span}>
               <Sample />
             </Col>
           </Row>

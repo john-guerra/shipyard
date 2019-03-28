@@ -1,7 +1,10 @@
 .sortableItem {
-	box-shadow: 0 2px 2px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.12);
 	margin-top: 5px;
-	padding: 1em;
+	margin-bottom: 0px;
+	cursor: move;
+	padding: 0.5em;
+	border-radius: 8px;
+	background-color: white;
 }
 
 .attribute {
@@ -9,8 +12,7 @@
 }
 
 .settings {
-	padding: 0 0.8em;
-
+	padding: 0 3em;
 }
 
 .settings .color {
@@ -18,29 +20,19 @@
 	grid-template-columns: 1fr 3fr;
 	align-items: center;
 	padding: 0.5em 0;
-	/*border: 1px solid black;*/
 }
-
-/*.settings .color > div:nth-child(2) {
-	display: grid;
-	grid-template-columns: auto auto;
-	justify-content: space-around;
-}*/
 
 .settings .alias {
 	display: grid;
-	grid-template-columns: 1fr 3fr;
+	grid-template-columns: 1fr 1fr;
 	align-items: center;
-	padding: 0.5em 0;
-	/*border: 1px solid black;*/
-}
-.settings .alias > div:nth-child(1) {
-	/*border: 1px solid black;*/
+	padding: 16px 0px;
 }
 .settings .alias > div:nth-child(2) {
 	width: 100%;
-	margin-left: 0%;
-	/*border: 1px solid black;*/
+	/* margin-left: 100px; */
+	/* padding-right: 36px; */
+
 }
 
 hr {
@@ -49,7 +41,7 @@ hr {
 	padding: 0;
     height: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);    
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .scheme10 {
@@ -60,9 +52,6 @@ hr {
 .scheme20 {
 	display: grid;
 	grid-template-columns: repeat(20, 2fr);
-}
-.color-selector {
-	/*border: 1px solid black;*/
 }
 
 .sequential-picker {

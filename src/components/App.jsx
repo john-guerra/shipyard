@@ -1,9 +1,9 @@
 import { Affix, Layout } from 'antd';
 import React from 'react';
-import { connect } from 'react-redux';
 import HeaderComponent from './header/Header';
 import FooterComponent from './footer/Footer';
 import Playground from './playground/Playground';
+import Loader from './loader/Loader';
 
 const { Header, Content, Footer } = Layout;
 const headerStyle = {
@@ -14,17 +14,19 @@ const headerStyle = {
 };
 const mainStyle = {
   minHeight: '100vh',
+  height: '100vh'
 };
-const App = loading => (
+const App = () => (
   <div style={mainStyle}>
-    <Layout>
+    <Loader></Loader>
+    <Layout style={{ height: '100%' }}>
       <Affix>
         <Header style={headerStyle}>
           <HeaderComponent />
         </Header>
       </Affix>
       <Content>
-        { loading ? <Playground /> : 'loading' }
+        <Playground />
       </Content>
       <Footer>
         <FooterComponent />
@@ -33,8 +35,4 @@ const App = loading => (
   </div>
 );
 
-const mapStateToProps = state => ({
-  loading: state.ui.loading,
-});
-
-export default connect(mapStateToProps)(App);
+export default App;

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
-import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
-import { scaleOrdinal, scaleLinear, scaleTime, scalePow } from 'd3-scale';
+import { scaleOrdinal, scaleLinear, scaleTime } from 'd3-scale';
 import { select } from 'd3-selection';
 import ActionGroup from './ActionGroup';
 import Side from './sidebar/Sider';
@@ -10,12 +8,16 @@ import { updateAttribute, updateFilteredData } from './../../../actions';
 import './sidebar.css';
 import * as d3ScaleChromatic from "d3-scale-chromatic";
 
-import navio from '../../../navio.js';
+// import navio from '../../../navio.js';
+import navio from 'navio';
 
 const cat = 'CATEGORICAL';
-const seq = 'SEQUENTIAL';
 const dat = 'DATE';
-const ord = 'ORDINAL';
+const text = 'TEXT';
+const bool = 'BOOLEAN';
+const div = 'DIVERGENT';
+const seq = 'SEQUENTIAL';
+
 class NavioContainer extends Component {
   componentDidMount() {
     this.setupNavio();
@@ -80,54 +82,60 @@ class NavioContainer extends Component {
     }
   }
   setupNavio = () => {
-    this.nn = navio(select(this.target), 600).updateCallback(this.props.updateFilteredData);
+    let nn = navio(select(this.target), 600).updateCallback(this.props.updateFilteredData);
     for (var i = 0; i < this.props.attributes.length; i++) {
         let d = this.props.attributes[i];
         if (d.checked) {
-          let color;
           switch (d.type) {
             case cat:
-              color = this.getScaleOrdinalScheme(d.color);
-              this.nn.addCategoricalAttrib(d.name);
+              nn.addCategoricalAttrib(d.name);
+              break;
+            case text:
+              nn.addTextAttrib(d.name);
+              break;
+            case bool:
+              nn.addBooleanAttrib(d.name);
+              break;
+            case div:
+              nn.addDivergingAttrib(d.name);
+              break;
+            case dat:
+              nn.addDateAttrib(d.name);
+              break;
+            case seq:
+              nn.addSequentialAttrib(d.name);
               break;
             default:
-              if (d.data === dat) {
-                color = this.getScaleTimeColor(d.color);
-                this.nn.addSequentialAttrib(d.name,
-                        scalePow()
-                          .range([d3ScaleChromatic.interpolatePurples(0), d3ScaleChromatic.interpolatePurples(1)]))
-                break;
-              }
-              else {
-                  color = this.getScaleOrdinalColor(d.color);
-                  this.nn.addSequentialAttrib(d.name);
-                  break;
-              }
+              nn.addTextAttrib(d.name);
           }
       }
     }
-    this.nn.data(this.props.data);
+    nn.data(this.props.data);
   }
 
   render () {
     const { showSidebar } = this.props;
     const sidebarStyles = ['sidebar'];
-    if (!showSidebar) {sidebarStyles.push('hide')}
+    const visStyles = ['vis'];
+
+    if (!showSidebar) {
+      sidebarStyles.push('hide');
+      visStyles.push('vis--hide');
+    }
     return (
       <div>
         <ActionGroup />
-        <Row>
-          <Col span={10} className={sidebarStyles.join(' ')}>
-            <Side />
-          </Col>
-          <Col span={showSidebar ? 14 : 24}>
+        <div className="container-vis">
+          <div className={ sidebarStyles.join(' ') }>
+            <Side  />
+          </div>
+          <div className={ visStyles.join(' ') }>
             <div
-              style={{ width: '100%', overflowX: 'scroll', minHeight: '700px' }}
               id="vis"
-              ref={(target) => this.target = target }
+              ref={ target => this.target = target }
             />
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     );
   }

@@ -1,72 +1,71 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Icon, Select, Tooltip, Switch } from 'antd';
-import { toggleSettingsVisible, changeTypeStatus, changeCheckStatus, updateAttribute, addComponentClass, deleteLastComponentClass } from './../../../../actions';
+import { toggleSettingsVisible, changeTypeStatus, changeCheckStatus, updateAttribute } from './../../../../actions';
+import './attribute.css';
 
 const { Option, OptGroup } = Select;
 class Attribute extends Component {
-  componentDidMount(){
-  }
-  componentDidUpdate(){
-  }
   state = {
     checked: this.props.checked,
-    settings: this.props.settings,
   }
   render () {
-    const { index, attribute, toggleVisible, changeCheckStatus, changeTypeStatus, addComponentClass, deleteLastComponentClass } = this.props;
-    const ico = attribute.settings ? 'up' : 'setting';
+    const { toggleVisible, changeCheckStatus, changeTypeStatus, attribute } = this.props;
+    console.log(attribute.alias);
+    const ico = 'down';
     return (
-      <Row type="flex" align="middle" justify="center" className="attribute">
-        <Col span={2} offset={1}>
-          <Button shape="circle" size="small" onClick={() => {
-              console.log('onClick')
-              this.setState({settings: !attribute.settings});
-              toggleVisible(index, !attribute["settings"]);
-              if (attribute.settings) {
-                deleteLastComponentClass(index);
-              } else {
-                addComponentClass('hide', index);
-              }
-            }}
+      <Row type="flex" align="middle" className="attribute">
+        <Col span={2}>
+          <Tooltip
+            placement="right"
+            title="Change color and alias"
           >
-            <Icon type={ico} />
-          </Button>
+            <Button shape="circle" size="small" onClick={() => {
+                this.setState({ visible: !attribute.__visible });
+                toggleVisible(attribute.__id, !attribute.__visible);
+              }}
+            >
+              <Icon type={ico} className={`down ${attribute.__visible ? 'down--rotated' : ''}`} />
+            </Button>
+          </Tooltip>
         </Col>
-        <Col span={8}  offset={1}>{attribute.name}</Col>
+        <Col span={10} className="truncate">{ attribute.alias }</Col>
         <Col span={8}>
-          {console.log(attribute.name, attribute.type)}
-          <Select
-            size="small"
-            style={{ width: '100%' }}
-            dropdownMatchSelectWidth={false}
-            value={attribute.type}
-            onChange={value => changeTypeStatus(attribute, value)}
+          <Tooltip
+            placement="bottom"
+            title="Change attribute type"
           >
-            <OptGroup label="unordered">
-              <Option value="CATEGORICAL">CATEGORICAL</Option>
-            </OptGroup>
-            <OptGroup label="ordered">
-              <Option value="ORDINAL">ORDINAL</Option>
-              <Option value="SEQUENTIAL">SEQUENTIAL</Option>
-              <Option value="DATE">DATE</Option>
-            </OptGroup>
-          </Select>
+            <Select
+              size="small"
+              style={{ width: '100%' }}
+              dropdownMatchSelectWidth={false}
+              value={attribute.type}
+              onChange={value => { this.setState({ attribute }); changeTypeStatus(attribute, value);}}
+            >
+              <OptGroup label="unordered">
+                <Option value="CATEGORICAL">Categorical</Option>
+                <Option value="TEXT">Text</Option>
+                <Option value="BOOLEAN">Boolean</Option>
+
+              </OptGroup>
+              <OptGroup label="ordered">
+                <Option value="ORDINAL">Ordinal</Option>
+                <Option value="SEQUENTIAL">Sequential</Option>
+                <Option value="DATE">Date</Option>
+                <Option value="DIVERGENT">Divergent</Option>
+              </OptGroup>
+            </Select>
+          </Tooltip>
         </Col>
-        <Col span={4}>
-          <Tooltip placement="right" title="Here you can change this dimension visibility">
-            <Switch size="small" defaultChecked={true} checked={attribute.checked} style={{ marginLeft: '2em' }} onChange={checked => { console.log(checked);this.setState({checked}); changeCheckStatus(attribute, checked);}} />
+        <Col span={2}>
+          <Tooltip placement="right" title="Here you can hide this attribute in Navio">
+            <Switch size="small" defaultChecked={true} checked={attribute.checked} style={{ marginLeft: '2em' }} onChange={checked => { this.setState({checked}); changeCheckStatus(attribute, checked);}} />
           </Tooltip>
         </Col>
       </Row>
     )
   }
 }
-
-const mapStateToProps = (state, param) => ({
-  attribute: state.shipyard.attributes[param.index],
-  index: param.index,
-});
 
 const mapDispatchToProps = dispatch => ({
   toggleVisible: (index, visible) => {
@@ -80,8 +79,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(changeCheckStatus(att, status));
     dispatch(updateAttribute());
   },
-  deleteLastComponentClass: index => dispatch(deleteLastComponentClass(index)),
-  addComponentClass: (className, index) => dispatch(addComponentClass(className, index)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Attribute);
+export default connect(null, mapDispatchToProps)(Attribute);

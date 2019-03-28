@@ -1,4 +1,4 @@
-import { SHOW_MODAL, TOGGLE_LOADING, TOGGLE_DATA_LOADED, RESET_DATA, TOGGLE_SIDEBAR, DELETE_COMPONENT_CLASS, ADD_COMPONENT_CLASS, SET_COMPONENT_CLASSES, SWAP_COMPONENT_CLASSES } from './../actions/index';
+import { SHOW_MODAL, TOGGLE_LOADING, TOGGLE_DATA_LOADED, RESET_DATA, TOGGLE_SIDEBAR, HIDE_ATTRIBUTE, SHOW_ATTRIBUTE, SET_COMPONENT_CLASSES, SWAP_COMPONENT_CLASSES } from './../actions/index';
 
 const initialState = {
   confirmLoading: false,
@@ -7,7 +7,6 @@ const initialState = {
   visible: false,
   dataLoaded: false,
   showSidebar: false,
-  componentClasses: ['box'],
 };
 const ui = (state = initialState, action) => {
   switch (action.type) {
@@ -29,33 +28,26 @@ const ui = (state = initialState, action) => {
       return Object.assign({}, state, {
         showSidebar: !state.showSidebar,
       });
-    case DELETE_COMPONENT_CLASS:
-      let componentsDeleted = state.componentClasses.splice(0);
-      componentsDeleted[action.index].classes = ["box"];
+    case HIDE_ATTRIBUTE:
       return Object.assign({}, state, {
-        componentClasses: componentsDeleted,
+        attributes: state.attributes.map(attr => {
+          if (action.index === attr.__id) {
+            attr.__visible = false;
+          }
+          return attr;
+        })
       });
-    case ADD_COMPONENT_CLASS:
-      console.log(action)
-      const componentAdd = ['box', action.className];
-      let componentsAdd = state.componentClasses.splice(0);
-      componentsAdd[action.index].classes = componentAdd; 
+    case SHOW_ATTRIBUTE:
       return Object.assign({}, state, {
-        componentClasses: componentsAdd,
-      });
-    case SWAP_COMPONENT_CLASSES:
-      let temp;
-      let swaped = state.componentClasses.splice(0);
-      temp = swaped[action.i];
-      swaped[action.i] = swaped[action.j];
-      swaped[action.j] = temp;
-      return Object.assign({}, state, {
-        componentClasses: swaped,
-      });
+        attributes: state.attributes.map(attr => {
+          if (action.index === attr.__id) {
+            attr.__visible = true;
+          }
+          return attr;
+        })
+      })
     case SET_COMPONENT_CLASSES:
       let array = [];
-      console.log(action)
-      console.log(state.componentClasses)
       action.attributes.forEach((d, k)=> {
         let i = {};
         i.classes = ['box', 'hide'];

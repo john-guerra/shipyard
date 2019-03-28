@@ -18,15 +18,14 @@ export const UPDATE_ATTRIBUTE = 'UPDATE_ATTRIBUTE';
 export const UPDATE_FILTERED_DATA = 'UPDATE_FILTERED_DATA';
 export const TOGGLE_SETTINGS_VISIBLE = 'TOGGLE_SETTINGS_VISIBLE';
 export const TOGGLE_COLOR_VISIBLE = 'TOGGLE_COLOR_VISIBLE';
-export const DELETE_COMPONENT_CLASS = 'DELETE_COMPONENT_CLASS';
-export const ADD_COMPONENT_CLASS = 'ADD_COMPONENT_CLASS';
+export const HIDE_ATTRIBUTE = 'HIDE_ATTRIBUTE';
+export const SHOW_ATTRIBUTE = 'SHOW_ATTRIBUTE';
 export const SET_COMPONENT_CLASSES = 'SET_COMPONENT_CLASSES';
 export const SWAP_COMPONENT_CLASSES = 'SWAP_COMPONENT_CLASSES';
 export const SET_ALIAS = 'SET_ALIAS';
 
 const seq = 'SEQUENTIAL';
 const cat = 'CATEGORICAL';
-const ord = 'ORDINAL';
 const dat = 'DATE';
 const types = [
   [seq, 'NUMBER'],
@@ -82,7 +81,7 @@ const getAttributesType = (keys, atts, data) => {
   let attributes = JSON.parse(JSON.stringify(atts));
   let ids = [];
   // regular expression used to match strings starting and finishing with id or key or in a word within non-word characters
-  const reg = /^(id|key)|(id|key)$|\W+\_*(key|id)+\_*\W+|\W+\_*(key|id)+\_*\W*/gmi;
+  const reg = /^(id|key)|(id|key)$|\W+(key|id)+\W+|\W+(key|id)+\W*/gmi;
   // returns 6 uniformly distributed rows
   const sample = getSample(6, data);
   for (let key = 0; key < keys.length; key += 1) {
@@ -103,9 +102,8 @@ const getAttributesType = (keys, atts, data) => {
         i = typei;
       }
     }
-    const [type, data] = types[i];
+    const [type] = types[i];
     attributes[key].type = type;
-    attributes[key].data = data;
   }
   return [attributes, ids];
 };
@@ -114,10 +112,11 @@ const getAttributesType = (keys, atts, data) => {
  * action creators
  */
 export const setData = (data) => {
-  const source = data.slice(0);
+  // const source = data.slice(0);
   /* Creates an empty array that will contain the metadata of the attributes */
   let attributes = [];
   let ids = [];
+  let __id = 0;
   const keys = Object.keys(data[0]);
   for (let i = 0; i < keys.length; i += 1) {
     const attribute = {
@@ -126,21 +125,22 @@ export const setData = (data) => {
       checked: true,
       type: '',
       id: false,
-      settings: false,
+      __id: __id++,
+      __visible: false,
     };
     attributes.push(attribute);
   }
   [attributes, ids] = getAttributesType(keys, attributes, data);
-  const parsedData = data.map((d) => {
-    let row = JSON.parse(JSON.stringify(d));
+  const parsedData = data.map((row) => {
+    // let row = JSON.parse(JSON.stringify(d));
     attributes.forEach((att)=> {
-      if (att.data === 'DATE') {
+      if (att.type === 'DATE') {
         const mydate = new Date(row[att.name]);
         if (isNaN(mydate.getDate())) {
         } else {
           row[att.name] = mydate;
         }
-      } else if (att.data === 'NUMBER') {
+      } else if (att.type === 'SEQUENTIAL') {
         const mynumber = +row[att.name];
         if (isNaN(mynumber)) {
         } else {
@@ -152,8 +152,8 @@ export const setData = (data) => {
   });
   return {
     type: SET_DATA,
-    source,
     data: parsedData,
+    source: data,
     attributes,
     ids,
   };
@@ -222,14 +222,13 @@ export const toggleColorVisible = index => ({
   index,
 });
 
-export const deleteLastComponentClass = index => ({
-  type: DELETE_COMPONENT_CLASS,
+export const hideAttribute = index => ({
+  type: HIDE_ATTRIBUTE,
   index,
 });
 
-export const addComponentClass = (className, index) => ({
-  type: ADD_COMPONENT_CLASS,
-  className,
+export const showAttribute = index => ({
+  type: SHOW_ATTRIBUTE,
   index,
 })
 
@@ -239,8 +238,8 @@ export const swapComponentClasses = (i, j) => ({
   j,
 })
 
-export const setAlias = (event, attribute) => ({
+export const setAlias = (alias, index) => ({
   type: SET_ALIAS,
-  event,
-  attribute,
+  alias,
+  index,
 });

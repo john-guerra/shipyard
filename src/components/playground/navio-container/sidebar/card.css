@@ -7,16 +7,16 @@
   -o-transition: 0.5s;
   transition: 0.5s;
   opacity: 0;
-  visibility: hidden; 
+  visibility: hidden;
 }
 .example-component.show {
   opacity: 1;
-  visibility: visible; 
+  visibility: visible;
 }
 
 .box {
   visibility: visible;
-  height: 12vh;
+  height: 90px;
   width: 100%;
   opacity: 1.0;
   box-sizing: border-box;
